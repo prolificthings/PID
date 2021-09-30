@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/acme</item>
+        <item>@font/alegreya_bold</item>
+        <item>@font/alike</item>
+        <item>@font/antic</item>
+        <item>@font/antic_didone</item>
+        <item>@font/audiowide</item>
+        <item>@font/bree_serif</item>
+    </array>
+</resources>

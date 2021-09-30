@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RankActivity">
+
+    <ImageView
+        android:id="@+id/rankImg"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/rank_icon" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/green"
+        app:itemIconTint="@drawable/nav_selector"
+        app:itemTextColor="@color/black"
+        app:menu="@menu/menu_bottom" >
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    <Button
+        android:id="@+id/competitorsBtn"
+        android:layout_below="@+id/myRankTxt"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/comp_btn"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         />
+
+    <TextView
+        android:id="@+id/myRankTxt"
+        android:background="@drawable/rank_txtbg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-40dp"
+        android:layout_below="@+id/rankImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="gravity"
+        android:gravity="center"
+        android:text="144"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="28sp"/>
+
+    <Button
+        android:id="@+id/top3Btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/competitorsBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/top3rect"
+        android:fontFamily="@font/audiowide"
+        android:textSize="20sp"
+        android:textColor="@color/gray"
+        android:text="TOP 3" />
+
+</RelativeLayout>

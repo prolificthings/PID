@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "281728071372",
+    "project_id": "geofence-d93ea",
+    "storage_bucket": "geofence-d93ea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:281728071372:android:fef69fd25a7b51ead73469",
+        "android_client_info": {
+          "package_name": "com.example.geofencebarcodescanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "281728071372-on3dt3r001ns3ts10uqv6u2b0ikmmm8c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5fqugJfiy35m8NRHNKVsEqKolrW_2J4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "281728071372-on3dt3r001ns3ts10uqv6u2b0ikmmm8c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
