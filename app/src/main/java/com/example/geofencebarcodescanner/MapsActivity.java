@@ -21,11 +21,15 @@ import android.graphics.Color;
 import android.location.Location;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.location.LocationListener;
@@ -37,6 +41,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.firebase.geofire.GeoFire;
@@ -52,14 +57,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -97,14 +106,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     Button scan;
 
     ImageView rewardImg;
+    ScrollView scrollView;
 
-    BarChart barChart;
-    BarData  barData;
-    BarDataSet barDataSet;
-    ArrayList<BarEntry> barEntryList;
+    LineChart barChart;
+    LineData barData;
+    LineDataSet barDataSet;
+    ArrayList<Entry> barEntryList;
     ArrayList<BarDetails> barEntries = new ArrayList<>();
     ArrayList<String> labels;
 
+    private ChildEventListener mChildEventListener;
+    private DatabaseReference mLocs;
+    Marker marker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +127,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        scrollView = findViewById(R.id.scrollView);
+
+        ((WorkAroundMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).setListener(new WorkAroundMapFragment.OnTouchListener() {
+            @Override
+            public void onTouch() {
+                scrollView.requestDisallowInterceptTouchEvent(true);
+            }
+        });
+
+        ChildEventListener mChildEventListener;
+        mLocs = FirebaseDatabase.getInstance().getReference("Location");
+        mLocs.push().setValue(marker);
 
         dbRef = FirebaseDatabase.getInstance().getReference("My Location");
         geoFire = new GeoFire(dbRef);
@@ -135,12 +161,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             barEntryList.add(new BarEntry(i,scan));
             labels.add(month);
         }
-        barDataSet = new BarDataSet(barEntryList,"Monthly scans");
-        barData = new BarData(barDataSet);
+
+        int colorArray[] = {R.color.green, R.color.golden, R.color.red, R.color.golden, R.color.green, R.color.red,
+                R.color.green, R.color.golden, R.color.red, R.color.red, R.color.red};
+
+        barDataSet = new LineDataSet(barEntryList,"Monthly scans");
+        barData = new LineData(barDataSet);
         barChart.setData(barData);
-        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        barDataSet.setColors(colorArray,MapsActivity.this);
         barDataSet.setValueTextColor(Color.BLACK);
         barDataSet.setValueTextSize(12f);
+        barDataSet.setLineWidth(3.0f);
         Description description = new Description();
         description.setText("Months");
         barChart.setDescription(description);
@@ -150,7 +181,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         xAxis.setDrawGridLines(false);
         xAxis.setGranularity(1f);
         xAxis.setLabelCount(labels.size());
-        xAxis.setLabelRotationAngle(270);
+        xAxis.setLabelRotationAngle(0);
         barChart.animateY(2000);
         barChart.invalidate();
 
@@ -207,14 +238,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         barEntries = new ArrayList<>();
         barEntries.add(new BarDetails("Jan",20));
         barEntries.add(new BarDetails("Feb",40));
-        barEntries.add(new BarDetails("Mar",10));
-        barEntries.add(new BarDetails("Apr",5));
+        barEntries.add(new BarDetails("Mar",30));
+        barEntries.add(new BarDetails("Apr",15));
         barEntries.add(new BarDetails("May",38));
         barEntries.add(new BarDetails("June",54));
         barEntries.add(new BarDetails("July",0));
         barEntries.add(new BarDetails("Aug",27));
-        barEntries.add(new BarDetails("Sept",12));
-        barEntries.add(new BarDetails("Oct",0));
+        barEntries.add(new BarDetails("Sept",22));
+        barEntries.add(new BarDetails("Oct",8));
         barEntries.add(new BarDetails("Nov",0));
         barEntries.add(new BarDetails("Dec",0));
 
@@ -306,7 +337,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 currentMarker = mMap.addMarker(new MarkerOptions()
                                 .position(new LatLng(latitude,longitude)).title("You"));
 
-                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),17.0f));
+                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),18.3f));
                             }
                         });
             }
@@ -348,86 +379,66 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        LatLng fencingArea = new LatLng(20.308404,85.845660);
-        mMap.addCircle(new CircleOptions()
-        .center(fencingArea)
-        .radius(100)//mtrs
-        .strokeColor(Color.GREEN)
-        .fillColor(Color.argb(64, 0, 0, 200))
-        .strokeWidth(5.0f)
-        );
-
-        LatLng fencingArea2 = new LatLng(20.263189,85.824507);
-        mMap.addCircle(new CircleOptions()
-                .center(fencingArea2)
-                .radius(100)//mtrs
-                .strokeColor(Color.GREEN)
-                .fillColor(Color.argb(64, 0, 0, 200))
-                .strokeWidth(5.0f)
-        );
-
-        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(fencingArea.latitude,fencingArea.longitude),0.1f);          //0.5f = 0.5km= 500m
-        GeoQuery geoQuery2 = geoFire.queryAtLocation(new GeoLocation(fencingArea2.latitude,fencingArea2.longitude),0.1f);
-        geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
+        mLocs.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onKeyEntered(String key, GeoLocation location) {
-                sendNotification("NEHA",String.format("%s entered the bin area",key));
-                scan.setVisibility(VISIBLE);
-            }
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot s: snapshot.getChildren()){
+                    Locations loc = s.getValue(Locations.class);
+                    LatLng location = new LatLng(loc.latitude,loc.longitude);
+                    mMap.addMarker(new MarkerOptions().position(location)).setIcon(BitmapDescriptorFactory.fromResource(R.drawable.dustbin));
 
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onKeyExited(String key) {
-                sendNotification("NEHA", String.format("%s exited from the bin area",key));
-                scan.setVisibility(INVISIBLE);
-            }
+                    mMap.addCircle(new CircleOptions()
+                            .center(location)
+                            .radius(5.0)//mtrs
+                            .strokeColor(Color.GREEN)
+                            .fillColor(Color.argb(100, 0, 200, 0))
+                            .strokeWidth(5.0f)
+                    );
 
-            @Override
-            public void onKeyMoved(String key, GeoLocation location) {
-                Log.d("MOVE",String.format("%s moved within the bin area[%f,%f]",key,location.latitude,location.longitude));
-            }
+                    GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(location.latitude,location.longitude),0.02f);          //0.5f = 0.5km= 500m
 
-            @Override
-            public void onGeoQueryReady() {
+                    geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onKeyEntered(String key, GeoLocation location) {
+                            sendNotification("NEHA",String.format("%s entered the bin area",key));
+                            scan.setVisibility(VISIBLE);
+                        }
 
-            }
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onKeyExited(String key) {
+                            sendNotification("NEHA", String.format("%s exited from the bin area",key));
+                            scan.setVisibility(INVISIBLE);
+                        }
 
-            @Override
-            public void onGeoQueryError(DatabaseError error) {
-                Log.e("ERROR",""+error);
-            }
-        });
-        geoQuery2.addGeoQueryEventListener(new GeoQueryEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onKeyEntered(String key, GeoLocation location) {
-                sendNotification("ANUP",String.format("%s entered the bin area",key));
-                scan.setVisibility(VISIBLE);
-            }
+                        @Override
+                        public void onKeyMoved(String key, GeoLocation location) {
+                            Log.d("MOVE",String.format("%s moved within the bin area[%f,%f]",key,location.latitude,location.longitude));
+                        }
 
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onKeyExited(String key) {
-                sendNotification("ANUP", String.format("%s exited from the bin area",key));
-                scan.setVisibility(INVISIBLE);
+                        @Override
+                        public void onGeoQueryReady() {
+
+                        }
+
+                        @Override
+                        public void onGeoQueryError(DatabaseError error) {
+                            Log.e("ERROR",""+error);
+                        }
+                    });
+
+
+                }
             }
 
             @Override
-            public void onKeyMoved(String key, GeoLocation location) {
-                Log.d("MOVE",String.format("%s moved within the bin area[%f,%f]",key,location.latitude,location.longitude));
-            }
+            public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onGeoQueryReady() {
-
-            }
-
-            @Override
-            public void onGeoQueryError(DatabaseError error) {
-                Log.e("ERROR",""+error);
             }
         });
+
+
 
     }
 
@@ -471,7 +482,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient,locationRequest,this);
-        //LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient,locationRequest,this);
     }
 
     @Override

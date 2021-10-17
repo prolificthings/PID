@@ -2,6 +2,9 @@ package com.example.geofencebarcodescanner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,10 +16,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.journeyapps.barcodescanner.CaptureActivity;
 
+import java.util.ArrayList;
+
 public class RankActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
-    Button compBtn, top3Btn;
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    RecyclerView.Adapter adapter;
+    ArrayList<Rank> ranks;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,23 +58,28 @@ public class RankActivity extends AppCompatActivity {
             }
         });
 
-        compBtn = findViewById(R.id.competitorsBtn);
-        compBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RankActivity.this, CompetitorsActivity.class);
-                startActivity(intent);
-            }
-        });
+        recyclerView = findViewById(R.id.rank_recycler);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
 
-        top3Btn = findViewById(R.id.top3Btn);
-        top3Btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                top3Btn.setTextColor(getResources().getColor(R.color.black));
-                Intent intent = new Intent(RankActivity.this, Top3Activity.class);
-                startActivity(intent);
-            }
-        });
+        ranks = new ArrayList<Rank>();
+        ranks.add(new Rank(1,"Manisha","262 scans"));
+        ranks.add(new Rank(2,"Avinash","259 scans"));
+        ranks.add(new Rank(3,"Nupur","255 scans"));
+        ranks.add(new Rank(4,"Satish","254 scans"));
+        ranks.add(new Rank(5,"Priyansh","240 scans"));
+        ranks.add(new Rank(6,"Jasmine","235 scans"));
+        ranks.add(new Rank(7,"Parveen","232 scans"));
+        ranks.add(new Rank(8,"Raj","230 scans"));
+        ranks.add(new Rank(9,"Somali","229 scans"));
+        ranks.add(new Rank(10,"Sritam","217 scans"));
+
+        adapter = new RankAdapter(this,ranks);
+        recyclerView.setAdapter(adapter);
+
+
+
+
     }
 }

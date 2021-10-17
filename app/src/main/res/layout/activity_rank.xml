@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".RankActivity">
 
-    <ImageView
-        android:id="@+id/rankImg"
-        android:layout_width="match_parent"
-        android:layout_height="260dp"
-        android:layout_alignParentTop="true"
-        app:srcCompat="@drawable/rank_icon" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
@@ -25,42 +18,49 @@
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-    <Button
-        android:id="@+id/competitorsBtn"
-        android:layout_below="@+id/myRankTxt"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/comp_btn"
-        android:layout_marginTop="50dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-         />
+    <RelativeLayout
+        android:id="@+id/rel"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@drawable/bg_rank">
 
-    <TextView
-        android:id="@+id/myRankTxt"
-        android:background="@drawable/rank_txtbg"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-40dp"
-        android:layout_below="@+id/rankImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="gravity"
-        android:gravity="center"
-        android:text="144"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:textSize="28sp"/>
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:background="@drawable/share"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"/>
 
-    <Button
-        android:id="@+id/top3Btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/competitorsBtn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/top3rect"
-        android:fontFamily="@font/audiowide"
-        android:textSize="20sp"
-        android:textColor="@color/gray"
-        android:text="TOP 3" />
+        <TextView
+            android:id="@+id/leaderboard_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/work_sans_medium"
+            android:text="LeaderBoard"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/winner"
+            android:layout_below="@+id/leaderboard_txt"/>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rank_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rel"
+        android:layout_marginTop="10dp"
+        android:layout_above="@+id/navigation"/>
+
 
 </RelativeLayout>
