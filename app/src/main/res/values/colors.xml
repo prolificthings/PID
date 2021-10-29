@@ -12,5 +12,7 @@
     <color name="golden">#FFBF00</color>
     <color name="blue">#001DBC</color>
     <color name="light_green">#ABFFBD</color>
+    <color name="dark_green">#035006</color>
+    <color name="brown">#B67A20</color>
 </resources>
 

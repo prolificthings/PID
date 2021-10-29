@@ -93,13 +93,43 @@
             android:layout_above="@+id/navigation"
             android:text="SCAN"/>
 
-    <ImageView
-        android:id="@+id/rewardImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:src="@drawable/reward_img"
-        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/rewardRll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/navigation"
+        android:background="@drawable/rb">
+
+        <io.alterac.blurkit.BlurLayout
+            android:id="@+id/blurLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:blk_blurRadius="1"
+            app:blk_downscaleFactor="0.3"
+            app:blk_fps="0"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200mdp"
+            app:lottie_fileName="gift_animate.json"
+            android:layout_marginTop="-10dp"
+            android:layout_centerInParent="true"
+            android:scaleType="fitCenter"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Viola! Your scan is succesful\n and you have won a reward"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_below="@+id/animationView"/>
+    </RelativeLayout>
 </RelativeLayout>
 
 

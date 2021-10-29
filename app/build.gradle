@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.geofencebarcodescanner"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -44,6 +44,10 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.h6ah4i.android.widget.verticalseekbar:verticalseekbar:1.0.0'
+    implementation 'io.alterac.blurkit:blurkit:1.1.0'
+    implementation 'com.github.MrNouri:DynamicSizes:1.0'
+    implementation "com.airbnb.android:lottie:3.4.0"
+
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.cardview:cardview:1.0.0'
     testImplementation 'junit:junit:4.+'

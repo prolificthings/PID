@@ -41,6 +41,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -98,6 +99,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     BottomNavigationView bottomNavigationView;
 
+    RelativeLayout rll;
+
     DatabaseReference dbRef;
     GeoFire geoFire;
 
@@ -128,6 +131,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        rll = findViewById(R.id.rewardRll);
         scrollView = findViewById(R.id.scrollView);
 
         ((WorkAroundMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).setListener(new WorkAroundMapFragment.OnTouchListener() {
@@ -209,8 +213,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
 
-        rewardImg = findViewById(R.id.rewardImg);
-        rewardImg.setVisibility(View.GONE);
+        //rll.setVisibility(View.GONE);
 
 
         scan= findViewById(R.id.scanBtn);
@@ -269,11 +272,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
 
             });
-            rewardImg.setVisibility(View.VISIBLE);
-            rewardImg.setOnClickListener(new View.OnClickListener() {
+            rll.setVisibility(View.VISIBLE);
+            rll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    rewardImg.setVisibility(View.INVISIBLE);
+                    rll.setVisibility(View.INVISIBLE);
                 }
             });
 
