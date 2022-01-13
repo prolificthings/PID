@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GroupChatActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatRecycle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/commentTxt"
+        android:padding="@dimen/_10mdp"/>
+
+
+    <EditText
+        android:id="@+id/commentTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/chatbg"
+        android:padding="10dp"
+        android:ems="10"
+        android:hint="Write a comment"
+        android:inputType="textPersonName|textMultiLine"
+        android:maxLines="2"
+        android:textCursorDrawable="@null"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:textSize="@dimen/_15mdp" />
+
+    <ImageView
+        android:id="@+id/sendBtn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignRight="@+id/commentTxt"
+        android:layout_alignBottom="@+id/commentTxt"
+        android:layout_alignTop="@+id/commentTxt"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="10dp"
+        app:srcCompat="@drawable/send_msg" />
+
+</RelativeLayout>
