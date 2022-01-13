@@ -21,7 +21,7 @@
     <RelativeLayout
         android:id="@+id/rel"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="230dp"
         android:background="@drawable/bg_rank">
 
         <Button
@@ -45,12 +45,45 @@
             android:textSize="22sp" />
 
         <ImageView
+            android:id="@+id/img"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
+
             android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
             android:src="@drawable/winner"
             android:layout_below="@+id/leaderboard_txt"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/img"
+            android:layout_marginTop="3dp">
+
+        <Button
+            android:id="@+id/friendsRef"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="By friends"
+            android:textAllCaps="false"
+            android:textColor="#1EBBB3"
+            android:background="@drawable/friendref_shp"
+            />
+            <Button
+                android:id="@+id/regionRef"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="-2dp"
+                android:text="By region"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:background="@drawable/regionref_shp"
+                android:layout_toRightOf="@+id/friendsRef"
+                />
+
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

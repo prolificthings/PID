@@ -13,4 +13,8 @@
         android:id="@+id/mReward"
         android:icon="@drawable/rewards"/>
 
+    <item android:title="Community"
+        android:id="@+id/mCommunity"
+        android:icon="@drawable/community"/>
+
 </menu>

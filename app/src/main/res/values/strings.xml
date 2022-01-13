@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">PFree</string>
     <!--    <string name="title_activity_maps">Map</string>-->
-    <string name="map_key" translatable="false">@Your_key_here</string>
+    <string name="map_key" translatable="false">AIzaSyD6OATSirt2tAad35zU7365Sv43Qmm4kmo</string>
 </resources>

@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -18,6 +19,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -106,7 +108,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     Marker currentMarker;
 
-    Button scan;
+    Button scan, start_closeBtn;
+    Dialog dialog;
 
     ImageView rewardImg;
     ScrollView scrollView;
@@ -140,6 +143,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 scrollView.requestDisallowInterceptTouchEvent(true);
             }
         });
+
+        dialog = new Dialog(this);
+
+        openStartDialog();
+
+
 
         ChildEventListener mChildEventListener;
         mLocs = FirebaseDatabase.getInstance().getReference("Location");
@@ -207,13 +216,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         overridePendingTransition(0,0);
                         return;
 
+                    case R.id.mCommunity:
+                        startActivity(new Intent(getApplicationContext(),CommunityActivity.class));
+                        finish();
+                        overridePendingTransition(0,0);
+                        return;
+
 
                 }
             }
         });
 
 
-        //rll.setVisibility(View.GONE);
+        rll.setVisibility(View.GONE);
 
 
         scan= findViewById(R.id.scanBtn);
@@ -234,6 +249,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 intentIntegrator.initiateScan();
             }
         });
+    }
+
+    private void openStartDialog() {
+        dialog.setContentView(R.layout.start_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView close = dialog.findViewById(R.id.closeBtn);
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
 

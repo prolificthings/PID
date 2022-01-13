@@ -11,4 +11,6 @@
     <style name="FloatingHintStyle" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/gray</item>
     </style>
+
+    <style name="AlertDialog" parent="Base.Theme.AppCompat.Light.Dialog" />
 </resources>

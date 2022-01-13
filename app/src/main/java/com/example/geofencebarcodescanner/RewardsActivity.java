@@ -50,6 +50,12 @@ public class RewardsActivity extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return;
 
+                    case R.id.mCommunity:
+                        startActivity(new Intent(getApplicationContext(),CommunityActivity.class));
+                        finish();
+                        overridePendingTransition(0,0);
+                        return;
+
 
                 }
             }

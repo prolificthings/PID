@@ -53,6 +53,12 @@ public class RankActivity extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return;
 
+                    case R.id.mCommunity:
+                        startActivity(new Intent(getApplicationContext(),CommunityActivity.class));
+                        finish();
+                        overridePendingTransition(0,0);
+                        return;
+
 
                 }
             }
@@ -64,16 +70,16 @@ public class RankActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         ranks = new ArrayList<Rank>();
-        ranks.add(new Rank(1,"Manisha","262 scans"));
-        ranks.add(new Rank(2,"Avinash","259 scans"));
-        ranks.add(new Rank(3,"Nupur","255 scans"));
-        ranks.add(new Rank(4,"Satish","254 scans"));
-        ranks.add(new Rank(5,"Priyansh","240 scans"));
-        ranks.add(new Rank(6,"Jasmine","235 scans"));
-        ranks.add(new Rank(7,"Parveen","232 scans"));
-        ranks.add(new Rank(8,"Raj","230 scans"));
-        ranks.add(new Rank(9,"Somali","229 scans"));
-        ranks.add(new Rank(10,"Sritam","217 scans"));
+        ranks.add(new Rank(1,"Manisha","262 scans","android.resource://" + getPackageName() + "/drawable/r2"));
+        ranks.add(new Rank(2,"Avinash","259 scans","android.resource://" + getPackageName() + "/drawable/r1"));
+        ranks.add(new Rank(3,"Nupur","255 scans","android.resource://" + getPackageName() + "/drawable/r3"));
+        ranks.add(new Rank(4,"Satish","254 scans","android.resource://" + getPackageName() + "/drawable/r4"));
+        ranks.add(new Rank(5,"Priyansh","240 scans","android.resource://" + getPackageName() + "/drawable/r7"));
+        ranks.add(new Rank(6,"Jasmine","235 scans","android.resource://" + getPackageName() + "/drawable/r5"));
+        ranks.add(new Rank(7,"Parveen","232 scans","android.resource://" + getPackageName() + "/drawable/r6"));
+        ranks.add(new Rank(8,"Raj","230 scans","android.resource://" + getPackageName() + "/drawable/r1"));
+        ranks.add(new Rank(9,"Somali","229 scans","android.resource://" + getPackageName() + "/drawable/r4"));
+        ranks.add(new Rank(10,"Sritam","217 scans","android.resource://" + getPackageName() + "/drawable/r7"));
 
         adapter = new RankAdapter(this,ranks);
         recyclerView.setAdapter(adapter);
