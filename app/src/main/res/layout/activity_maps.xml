@@ -10,7 +10,7 @@
         android:id="@+id/shapeTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rll">
+        android:background="@drawable/ft">
 
         <TextView
             android:id="@+id/txt1"
@@ -18,28 +18,30 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/montserrat"
             android:text="Let's clean our land and sea \nto make the world plastic free"
             android:textColor="@color/black"
-            android:textSize="22sp"
-            app:fontFamily="@font/average_sans" />
+            android:textStyle="bold"
+
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/txt2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt1"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="2dp"
             app:fontFamily="@font/alike"
-            android:text="Scan more to earn more"
+            android:text="Scan more to earn more !"
             android:textColor="@color/blue"
-            android:textStyle="italic"
+            android:textStyle="bold|italic"
             android:textSize="18sp" />
 
 
     </RelativeLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,14 +55,92 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/barChart"
+            <RelativeLayout
+                android:id="@+id/info_layout"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginBottom="10dp"
-                >
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/info_shp">
 
-            </com.github.mikephil.charting.charts.LineChart>
+                <TextView
+                    android:id="@+id/scanNumberTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="You have done 12 scans this month"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/scanNumberTxt"
+                    android:layout_marginTop="-10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/scanHistoryTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="Scan History"
+                        android:textColor="#979494"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="18dp"
+                        android:layout_marginLeft="8dp"
+                        android:background="#979494" />
+
+                    <TextView
+                        android:id="@+id/ProgressActivityTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="Activities &amp; Progress"
+                        android:textColor="#979494"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/abhaya_libre"
+                android:text="PFree Khabri"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/newsRV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="15dp"/>
+
+            <!--            <com.github.mikephil.charting.charts.LineChart-->
+<!--                android:id="@+id/barChart"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="200dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                >-->
+
+<!--            </com.github.mikephil.charting.charts.LineChart>-->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/abhaya_libre"
+                android:text="Around You"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <fragment
                 android:id="@+id/map"
@@ -71,7 +151,7 @@
                 class="com.example.geofencebarcodescanner.WorkAroundMapFragment"/>
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -99,7 +179,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/navigation"
-        android:background="@drawable/rb">
+        android:background="@drawable/rb"
+        android:visibility="invisible">
 
         <io.alterac.blurkit.BlurLayout
             android:id="@+id/blurLayout"
@@ -107,28 +188,28 @@
             android:layout_height="match_parent"
             app:blk_blurRadius="1"
             app:blk_downscaleFactor="0.3"
-            app:blk_fps="0"/>
+            app:blk_fps="0" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animationView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_200mdp"
-            app:lottie_fileName="gift_animate.json"
-            android:layout_marginTop="-10dp"
             android:layout_centerInParent="true"
+            android:layout_marginTop="-10dp"
             android:scaleType="fitCenter"
             app:lottie_autoPlay="true"
-            app:lottie_loop="true"/>
+            app:lottie_fileName="gift_animate.json"
+            app:lottie_loop="true" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Viola! Your scan is succesful\n and you have won a reward"
-            android:textSize="20sp"
+            android:layout_below="@+id/animationView"
             android:gravity="center"
+            android:text="Viola! Your scan is succesful\n and you have won a reward"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_below="@+id/animationView"/>
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 </RelativeLayout>
 
