@@ -21,8 +21,6 @@
             android:fontFamily="@font/montserrat"
             android:text="Let's clean our land and sea \nto make the world plastic free"
             android:textColor="@color/black"
-            android:textStyle="bold"
-
             android:textSize="18sp" />
 
         <TextView
